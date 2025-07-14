@@ -93,3 +93,11 @@
     border-radius: 8px;
   }
 }
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  background: rgb(35, 49, 209);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}

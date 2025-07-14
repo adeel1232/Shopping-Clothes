@@ -12,6 +12,7 @@ const dummyProduct = {
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalProduct, setModalProduct] = useState(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   const handleImageClick = (product) => {
     setModalProduct(product);
@@ -28,17 +29,31 @@ const Home = () => {
   };
 
   return (
-    <div className="home-container">
-      {/* 👇 Full-width video section */}
-      <div className="video-wrapper">
-        <video autoPlay muted loop playsInline className="home-video">
+    <div className="home-container" id='home'>
+      <h1>Welcome to Fahad Clothes Online Market</h1>
+      <p>Discover stylish and modern clothing curated just for you.</p>
+
+      {/* 👇 Video section below heading */}
+      {!videoLoaded && (
+        <div className="video-loading">
+          <div className="spinner"></div>
+          <p>Loading Fashion Video...</p>
+        </div>
+      )}
+
+      <div className="video-wrapper" style={{ display: videoLoaded ? 'block' : 'none' }}>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="home-video"
+          onLoadedData={() => setVideoLoaded(true)}
+        >
           <source src="/videos/fashion.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
-
-      <h1>Welcome to Fahad Clothes Online Market</h1>
-      <p>Discover stylish and modern clothing curated just for you.</p>
 
       <div className="image-wrapper">
         <img

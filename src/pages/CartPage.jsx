@@ -1,121 +1,115 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart, clearCart, addToCart } from '../redux/cartSlice';
-import { useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer'; // ✅ Footer import کیا
+import React, { useState } from 'react';
+import './Contact.css'; // ✅ External CSS
 
-const CartPage = () => {
-  const cartItems = useSelector((state) => state.cart.cartItems);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    Address: '',
+    message: '',
+  });
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState('');
 
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmitMessage = (e) => {
+    e.preventDefault();
+    const { name, email, message, Address } = formData;
+    if (!name || !email || !message || !Address) {
+      alert('❗ Please fill all fields');
+      return;
+    }
+    setShowPaymentOptions(true);
+  };
+
+  const handlePaymentSelect = (method) => {
+    setSelectedPayment(method);
+  };
+
+  const handleFinalSubmit = () => {
+    alert(`🎉 Congratulations!\nYour message has been sent.\nPayment Method: ${selectedPayment}`);
+    setFormData({ name: '', email: '', Address: '', message: '' });
+    setSelectedPayment('');
+    setShowPaymentOptions(false);
+  };
 
   return (
-    <>
-      <div style={styles.container}>
-        <h2>Your Shopping Cart</h2>
-        {cartItems.length === 0 ? (
-          <p>Your cart is empty.</p>
-        ) : (
-          <>
-            <ul style={styles.list}>
-              {cartItems.map((item) => (
-                <li key={item.id} style={styles.item}>
-                  <img src={item.image} alt={item.name} style={styles.img} />
-                  <div style={styles.details}>
-                    <h4>{item.name}</h4>
-                    <p>
-                      ${item.price} x {item.quantity} = ${item.price * item.quantity}
-                    </p>
-                    <div style={styles.buttons}>
-                      <button onClick={() => dispatch(addToCart(item))}>➕</button>
-                      <button onClick={() => dispatch(removeFromCart(item.id))}>➖</button>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <h3 style={styles.total}>Total: ${total.toFixed(2)}</h3>
+    <div className="contact-container">
+      <h2 className="contact-heading">📩 Contact Us</h2>
 
-            <div style={styles.actions}>
-              <button style={styles.clearBtn} onClick={() => dispatch(clearCart())}>
-                🗑️ Clear Cart
+      {!showPaymentOptions && (
+        <form onSubmit={handleSubmitMessage} className="contact-form">
+          <input
+            name="name"
+            placeholder="Full Name"
+            value={formData.name}
+            onChange={handleChange}
+            className="contact-input"
+            required
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Your Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="contact-input"
+            required
+          />
+          <input
+            name="Address"
+            placeholder="Your Address"
+            value={formData.Address}
+            onChange={handleChange}
+            className="contact-input"
+            required
+          />
+          <textarea
+            name="message"
+            placeholder="Type your message here..."
+            value={formData.message}
+            onChange={handleChange}
+            className="contact-textarea"
+            required
+          />
+          <button type="submit" className="contact-send-button">
+            🚀 Send Message
+          </button>
+        </form>
+      )}
+
+      {showPaymentOptions && (
+        <>
+          <h3 className="contact-payment-heading">💳 Choose Payment Method</h3>
+          <div className="contact-payment-buttons">
+            {['JazzCash', 'EasyPaisa', 'Google Pay'].map((method) => (
+              <button
+                key={method}
+                onClick={() => handlePaymentSelect(method)}
+                className={`payment-option-btn ${selectedPayment === method ? 'active' : ''} ${
+                  method.toLowerCase()
+                }`}
+              >
+                {method === 'JazzCash' && '🧾 '}
+                {method === 'EasyPaisa' && '💸 '}
+                {method === 'Google Pay' && '💳 '}
+                {method}
               </button>
-              <button style={styles.payBtn} onClick={() => navigate('/contact')}>
-                💳 Proceed to Payment
-              </button>
-            </div>
-          </>
-        )}
-      </div>
-      
-      <Footer /> {/* ✅ Footer صرف ایک بار نیچے render ہوگا */}
-    </>
+            ))}
+          </div>
+
+          {selectedPayment && (
+            <button onClick={handleFinalSubmit} className="contact-submit-pay-btn">
+              ✅ Submit Payment
+            </button>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 
-const styles = {
-  container: {
-    padding: '30px',
-    maxWidth: '800px',
-    margin: 'auto',
-    background: '#f8fafc',
-    borderRadius: '12px',
-    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-    minHeight: '80vh', // ✅ footer نیچے دھکیلنے کے لیے
-  },
-  list: {
-    listStyle: 'none',
-    padding: 0,
-  },
-  item: {
-    display: 'flex',
-    gap: '20px',
-    borderBottom: '1px solid #ccc',
-    padding: '15px 0',
-  },
-  img: {
-    width: '100px',
-    height: '100px',
-    borderRadius: '8px',
-    objectFit: 'cover',
-  },
-  details: {
-    flex: 1,
-  },
-  buttons: {
-    marginTop: '8px',
-    display: 'flex',
-    gap: '10px',
-  },
-  total: {
-    marginTop: '20px',
-    fontSize: '20px',
-    color: '#1e293b',
-  },
-  actions: {
-    marginTop: '20px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '10px',
-  },
-  clearBtn: {
-    padding: '10px 20px',
-    background: '#e11d48',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer',
-  },
-  payBtn: {
-    padding: '10px 20px',
-    background: '#16a34a',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer',
-  },
-};
-
-export default CartPage;
+export default Contact;

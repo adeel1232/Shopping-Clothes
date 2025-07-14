@@ -1,0 +1,24 @@
+.shop-container {
+  padding: 60px 20px;
+  margin-top: 100px; /* ✅ Header سے نیچے فاصلے کے لیے */
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 80vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.shop-heading {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 30px;
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  padding: 10px;
+}

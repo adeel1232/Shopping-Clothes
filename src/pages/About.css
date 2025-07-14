@@ -1,0 +1,67 @@
+.about-container {
+  padding: 60px 20px;
+  margin-top: 80px; /* 👈 Header سے نیچے فاصلے کے لیے */
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 80vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.about-heading {
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+.about-text {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #333;
+  line-height: 1.7;
+}
+
+.about-info-box {
+  background-color: #f1f5f9;
+  padding: 30px;
+  border-left: 6px solid #2563eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.about-subheading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.about-list {
+  list-style: none;
+  padding-left: 0;
+  font-size: 17px;
+  color: #444;
+  line-height: 2;
+}
+
+.about-list li {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  position: relative;
+}
+
+.about-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  height: 6px;
+  width: 6px;
+  background-color: #2563eb;
+  border-radius: 50%;
+}
+
