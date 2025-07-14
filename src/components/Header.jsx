@@ -11,9 +11,10 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <div className="logo-img">
+        {/* ✅ Image wrapped in Link */}
+        <Link to="/" onClick={() => setMenuOpen(false)} className="logo-img">
           <img src="/images/adeel.jpg" alt="logo" />
-        </div>
+        </Link>
         <span>Brand Lahore Clothes</span>
       </div>
 

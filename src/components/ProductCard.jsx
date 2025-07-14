@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/cartSlice';
-
+  import './ProductCard.css'; // ✅ CSS import
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
